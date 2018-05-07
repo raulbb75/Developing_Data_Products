@@ -1,0 +1,66 @@
+---
+title: "Developing Data Products - R Markdown and Leaflet Week 2"
+author: "Raul Banares"
+date: "07/05/2018"
+output:
+  html_document: default
+  word_document: default
+---
+
+## Introduction
+
+Create a web page using R Markdown that features a map created with Leaflet.
+
+Host your webpage on either Git Hub Pages, R Pubs, or NeoCities.
+
+Your webpage must contain the date that you created the document, and it must contain a map created with Leaflet. We would love to see you show off your creativity!
+
+
+## Preparation
+
+Install this R package:
+
+```{r Preparation}
+# install.packages("leaflet", dependencies=TRUE)
+```
+
+Load the library 
+
+```{r Load_Library}
+library(leaflet)
+```
+
+
+## Testing Leaflet package
+
+```{r Test_package}
+test_map <-  leaflet() %>%
+  addTiles() %>%  
+  addMarkers(lng=-3.6827, lat=40.4893, popup="Madrid city")
+test_map
+```
+
+## Creating a Custom Map
+
+```{r}
+RealMadridIcon <- makeIcon(
+  iconUrl = "https://es.m.wikipedia.org/wiki/Archivo:Escudo_real_madrid_1941b.png",
+  iconWidth = 31*215/230, iconHeight = 31,
+  iconAnchorX = 31*215/230/2, iconAnchorY = 16)
+
+RealMadridLatLong <- data.frame(
+  lat = c(40.4530100, 40.4240000, 40.479167),
+  lng = c(-3.6882900, -3.6718400, -3.611667))
+
+RealMadridSites <- c(
+  "<a href='https://www.realmadrid.com/estadio-santiago-bernabeu'>Stadium</a>",
+  "<a href='https://www.wizinkcenter.es/'>Basketball court</a>",
+  "<a href='https://www.realmadrid.com/sobre-el-real-madrid/el-club/ciudad-real-madrid/instalaciones'>Ciudad Deportiva</a>"
+)
+
+RealMadridLatLong %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = RealMadridIcon, popup = RealMadridSites)
+```
+
